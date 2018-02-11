@@ -10,29 +10,43 @@ class LoginForm extends Component{
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {
+                email:'',
+                password:''
+            }
         };
 
         this.onSubmit = this.onSubmit.bind(this);
         this.checkError = this.checkError.bind(this);
+        this.checkPassword = this.checkPassword.bind(this);
         //this.onChange = this.onChange.bind(this);
     }
     checkPassword(){
+        //homework
         console.log('checkPassword',this.state.password);
-        if(!Validator.isPassword(this.state.password))
-            this.setState({errors: {password:'not'}})
+        if(this.state.password<8)
+             this.setState({errors: {password:'not ok'}})
         else
-            this.setState({errors: {password:''}});
+            this.setState({errors: {password: ''}});
     }
     checkError(){
         console.log('checkEmail',this.state.email);
         if(!Validator.isEmail(this.state.email))
-            this.setState({errors: {email:'not email'}})
+            this.setState({errors: {email:'not email' , password:''}})
         else
-            this.setState({errors: {email:''}});
+            this.setState({errors: {email:'' , password: ''}});
     }
     onSubmit(){
-        console.log('onSubmit',this.state);
+        // console.log('onSubmit',this.state);
+        const { errors } = this.state;
+        if
+        (
+            errors.email == '' && errors.password == '' &&
+            this.state.email !=='' && this.state.password !== ""
+        ){
+            console.log('go to api');
+            this.props.submit(this.state);
+        }
     }
     render(){
         return(
