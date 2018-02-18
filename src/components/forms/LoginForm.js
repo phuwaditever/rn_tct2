@@ -20,19 +20,19 @@ class LoginForm extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
         this.checkPassword = this.checkPassword.bind(this);
-        //this.onChange = this.onChange.bind(this);
+        this.Validate = this.Validate.bind(this);
     }
-    checkPassword(){
-        if(this.state.password.length<8){
+
+    Validate(type,value){
+        if(this.state.password.length<7){
             this.setState({errors: {...this.state.errors, password:'more than 8'}});
             this.setState({disabled:true});
         }            
         else{
             this.setState({errors: {...this.state.errors, password:''}});
             this.setState({disabled:false});
-        }            
-    }
-    checkEmail(){
+        }  
+
         if(!Validator.isEmail(this.state.email)){
             this.setState({errors: {...this.state.errors, email:'not email format'}});
             this.setState({disabled:true});
@@ -41,8 +41,29 @@ class LoginForm extends Component{
             this.setState({errors: {...this.state.errors, email:''}});  
             this.setState({disabled:false});
         }
-            
     }
+
+    // checkPassword(){
+    //     if(this.state.password.length<7){
+    //         this.setState({errors: {...this.state.errors, password:'more than 8'}});
+    //         this.setState({disabled:true});
+    //     }            
+    //     else{
+    //         this.setState({errors: {...this.state.errors, password:''}});
+    //         this.setState({disabled:false});
+    //     }            
+    // }
+    // checkEmail(){
+    //     if(!Validator.isEmail(this.state.email)){
+    //         this.setState({errors: {...this.state.errors, email:'not email format'}});
+    //         this.setState({disabled:true});
+    //     }            
+    //     else{
+    //         this.setState({errors: {...this.state.errors, email:''}});  
+    //         this.setState({disabled:false});
+    //     }
+            
+    // }
     onSubmit(){
         // console.log('onSubmit',this.state);
         const { errors } = this.state;
@@ -62,16 +83,20 @@ class LoginForm extends Component{
                 <TextInput 
                     style={{backgroundColor:'pink'}}
                     placeholder="email"
-                    onChangeText={(email) => this.setState({ email })}
+                    // onChangeText={(email) => this.setState({ email })}
                     value={this.state.email}
-                    onBlur={this.checkEmail}
+                    onChange={this.Validate}
+                    // onBlur={this.checkEmail}
                 />
                 <Text>{this.state.errors.email}</Text>
                 <TextInput 
                     style={{backgroundColor:'pink',marginTop:10,marginBottom:10}}
                     secureTextEntry = 'true'
                     placeholder="password"
-                    onKeyPress={this.checkPassword}
+                    // onChangeText={(password) => this.setState({ password })}
+                    value={this.state.password}  
+                    onChange={this.Validate}                  
+                    // onKeyPress={this.checkPassword}
                 />
                 <Text>{this.state.errors.password}</Text>
                 <Button
